@@ -28,6 +28,42 @@ class Category:
         output += f"Total: {self.get_balance():.2f}"
         return output
 def create_spend_chart(categories):
-    return "Percentage spent by category"
+    chart = "Percentage spent by category"
+    spends = []
+    for cat in categories:
+        spends.append(sum(item['amount'] for item in cat.ledger if item['amount'] < 0))
+    total_spend = sum(spends)
+    percentages = []
+    for spend in spends:
+        percentage = (spend / total_spend) * 100
+        percentages.append(int((percentage // 10) * 10))
+    print(percentages)
+    for i in range(100, -1, -10):
+        chart += f"\n{i:>3}|"
+        for percentage in percentages:
+            if percentage >= i:
+                chart += " o "
+            else:
+                chart += "   "
+        chart += " "
+    chart += f"\n    {'-' * (3 * len(categories) + 1)}"
+    max_len = max(len(cat.name) for cat in categories)
+    for index in range(0, max_len):
+        chart += "\n    "
+        for cat in categories:
+            if index < len(cat.name):
+                chart += f" {cat.name[index]} "
+            else:
+                chart += "   "
+        chart += " "
+    return chart
 
-    (withdrawal)
+food = Category("Food")
+food.deposit(1000)
+food.withdraw(500)
+
+clothing = Category("Clothing")
+clothing.deposit(1000)
+clothing.withdraw(300)
+
+print((create_spend_chart([food, clothing])))
