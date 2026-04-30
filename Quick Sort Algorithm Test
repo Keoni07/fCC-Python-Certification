@@ -1,0 +1,13 @@
+def quick_sort(array):
+    if len(array) <= 1:
+        return array
+    
+    mid_point = array[len(array) // 2]
+
+    left = [x for x in array if x < mid_point]
+    middle = [x for x in array if x == mid_point]
+    right = [x for x in array if x > mid_point]
+
+    return quick_sort(left) + middle + quick_sort(right)
+
+print(quick_sort([20, 3, 14, 1, 5]))
