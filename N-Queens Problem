@@ -1,0 +1,28 @@
+def dfs_n_queens(n):
+    if n < 1:
+        return []
+    solutions = []
+    current_board = []
+
+    solve(0, n, current_board, solutions)
+    return solutions
+
+def solve(row, n, board, solutions):
+    if row == n:
+        solutions.append(list(board))
+        return
+    for col in range(n):
+        if is_safe(row, col, board):
+            board.append(col)
+            solve(row + 1, n, board, solutions)
+            board.pop()
+
+def is_safe(new_row, new_col, board):
+    for row_index, col_index in enumerate(board):
+        if col_index == new_col:
+            return False
+        if abs(row_index - new_row) == abs(col_index - new_col):
+            return False
+    return True
+
+print(dfs_n_queens(1))
