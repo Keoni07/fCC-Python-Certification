@@ -1,0 +1,16 @@
+def dfs(adj_matrix, start_node):
+    n = len(adj_matrix)
+    visited = [False] * n
+    result = []
+    
+    def travel(current_node):
+        visited[current_node] = True
+        result.append(current_node)
+        for neighbors in range(n):
+            if adj_matrix[neighbors][current_node] == 1 and not visited[neighbors]:
+                travel(neighbors)
+    
+    travel(start_node)
+    return result
+
+print(dfs([[0, 1, 0, 0], [1, 0, 1, 0], [0, 1, 0, 1], [0, 0, 1, 0]], 1))
